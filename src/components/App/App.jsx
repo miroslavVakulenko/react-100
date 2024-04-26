@@ -4,12 +4,20 @@ import Toggler from "../Toggler/Toggler";
 import css from "./App.module.css";
 import Reader from "../Reader/Reader";
 import articles from "../../articles.json";
+import SubmitForm from "../SubmitForm/SubmitForm";
 
 export default function App() {
   const [clicks, setClicks] = useState(0);
 
   const handleClick = () => {
     setClicks(clicks + 1);
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const form = evt.target;
+    const { login, password } = form.elements;
+    form.reset();
   };
 
   return (
@@ -25,6 +33,7 @@ export default function App() {
       <Toggler />
       <Toggler />
       <Toggler />
+      <SubmitForm handleSubmit={handleSubmit} />
     </div>
   );
 }
