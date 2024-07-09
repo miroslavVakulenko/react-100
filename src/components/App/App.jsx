@@ -10,11 +10,15 @@ export default function App() {
   const [error, setError] = useState(false);
 
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
+  // setQuery its for pagination for remember query on other pages
 
-  const handleSearch = (newQuery) => {
+  const [query, setQuery] = useState('');
+
+  const handleSearch = newQuery => {
     setQuery(newQuery);
     setPage(1);
+    //for next search to clear ul
+
     setArticles([]);
   };
 
@@ -23,7 +27,9 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (query === "") {
+    // pattern: not fetch before submit search form
+    // we pass mount
+    if (query === '') {
       return;
     }
 
@@ -32,7 +38,9 @@ export default function App() {
         setError(false);
         setIsLoading(true);
         const data = await fetchArticles(query, page);
-        setArticles((prevArticles) => {
+        //pattern: how rest el from State. react add to arg (prevArticles) prev State.
+
+        setArticles(prevArticles => {
           return [...prevArticles, ...data];
         });
       } catch (error) {
@@ -63,6 +71,7 @@ export default function App() {
   );
 }
 
+// if we don't need pagination we make request into handleSearch
 // useEffect(() => {
 //   async function getArticles() {
 //     try {
@@ -75,6 +84,7 @@ export default function App() {
 //       setIsLoading(false);
 //     }
 //   }
-
 //   getArticles();
 // }, []);
+
+//css loaders for react https://www.davidhu.io/react-spinners/
